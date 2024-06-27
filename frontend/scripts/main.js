@@ -10,20 +10,18 @@ document.addEventListener('DOMContentLoaded', () => {
             const password = document.getElementById('password').value;
 
             try {
-                const response = await fetch('http://localhost:3000/api/auth/signup', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ name, email, mobile, password })
+                const response = await axios.post('http://localhost:3000/api/auth/signup', {
+                    name,
+                    email,
+                    mobile,
+                    password
                 });
 
-                if (response.ok) {
+                if (response.status === 201) {
                     alert('Signup successful!');
                     window.location.href = 'login.html';
                 } else {
-                    const data = await response.json();
-                    alert(`Signup failed: ${data.message}`);
+                    alert(`Signup failed: ${response.data.message}`);
                 }
             } catch (error) {
                 console.error('Error:', error);
@@ -41,16 +39,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const password = document.getElementById('password').value;
 
             try {
-                const response = await fetch('http://localhost:3000/api/auth/login', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ email, password })
+                const response = await axios.post('http://localhost:3000/api/auth/login', {
+                    email,
+                    password
                 });
 
-                if (response.ok) {
-                    const user = await response.json();
+                if (response.status === 200) {
+                    const user = response.data;
                     alert('Login successful!');
                     localStorage.setItem('user', JSON.stringify(user));
                     window.location.href = 'index.html';
@@ -77,22 +72,23 @@ document.addEventListener('DOMContentLoaded', () => {
             const careerGoals = document.getElementById('profileCareerGoals').value;
 
             try {
-                const response = await fetch('http://localhost:3000/api/auth/profile', {
-                    method: 'PUT',
+                const response = await axios.put('http://localhost:3000/api/auth/profile', {
+                    name,
+                    mobile,
+                    career_goals: careerGoals
+                }, {
                     headers: {
                         'Content-Type': 'application/json',
                         'x-access-token': token
-                    },
-                    body: JSON.stringify({ name, mobile, career_goals: careerGoals })
+                    }
                 });
 
-                if (response.ok) {
-                    const updatedUser = await response.json();
+                if (response.status === 200) {
+                    const updatedUser = response.data;
                     alert('Profile updated successfully!');
                     localStorage.setItem('user', JSON.stringify(updatedUser));
                 } else {
-                    const data = await response.json();
-                    alert(`Profile update failed: ${data.message}`);
+                    alert(`Profile update failed: ${response.data.message}`);
                 }
             } catch (error) {
                 console.error('Error:', error);

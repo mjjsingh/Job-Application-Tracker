@@ -1,20 +1,20 @@
-const { app, PORT } = require('./app');
-const db = require('./backend/config/db.config');
+const app = require('./app'); 
+const db = require('./backend/models'); 
+const PORT = process.env.PORT || 4000; 
 
-// Ensure the database table 'users' exists or create it if not
-db.query('CREATE TABLE IF NOT EXISTS users (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255), email VARCHAR(255) UNIQUE, mobile VARCHAR(255), password VARCHAR(255), career_goals TEXT)', (err, res) => {
-    if (err) throw err;
-    console.log('Table created.');
-});
+db.sequelize.authenticate()
+    .then(() => {
+        console.log('Database connection has been established successfully.');
+        return db.sequelize.sync({ force: false }); // Set force: true if you want to drop tables and recreate them on every server start
+    })
+    .then(() => {
+        console.log('Database synchronized.');
 
-// Start the Express.js server
-const server = app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-});
-
-// Error handling for server startup
-server.on('error', (err) => {
-    console.error('Server startup error:', err);
-    process.exit(1); // Exit with failure
-});
+        app.listen(PORT, () => {
+            console.log(`Server is running on http://localhost:${PORT}`);
+        });
+    })
+    .catch(err => {
+        console.error('Database connection error:', err);
+    });
 
