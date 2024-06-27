@@ -1,16 +1,16 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db.config');
 
-const Application = sequelize.define('Application', {
-    company_name: {
+const Job = sequelize.define('Job', {
+    company: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    job_title: {
+    jobTitle: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    application_date: {
+    applicationDate: {
         type: DataTypes.DATE,
         allowNull: false
     },
@@ -23,4 +23,4 @@ const Application = sequelize.define('Application', {
     }
 });
 
-module.exports = Application;
+module.exports = Job;

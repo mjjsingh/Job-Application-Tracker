@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken');
 const { User } = require('../models/user.model');
-require('dotenv').config();
 
 const verifyToken = (req, res, next) => {
     let token = req.headers['x-access-token'];
@@ -24,7 +23,7 @@ const verifyToken = (req, res, next) => {
                         message: "User not found."
                     });
                 }
-                req.user = user; // Attach user object to request
+                req.userId = user.id; // Attach user ID to request
                 next();
             })
             .catch(err => {

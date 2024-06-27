@@ -1,7 +1,7 @@
 const { Sequelize } = require('sequelize');
 
 const sequelize = new Sequelize({
-    dialect: 'mysql', // Specify your database dialect (e.g., 'mysql', 'postgres', etc.)
+    dialect: 'mysql', 
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
     username: process.env.DB_USER,
@@ -10,4 +10,5 @@ const sequelize = new Sequelize({
 });
 
 module.exports = sequelize;
+
 

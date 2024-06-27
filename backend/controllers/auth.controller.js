@@ -3,13 +3,14 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 exports.signup = async (req, res) => {
-    const { name, email, password, career_goals } = req.body;
+    const { name, email, mobile, password, career_goals } = req.body;
 
     try {
         const hashedPassword = await bcrypt.hash(password, 8);
         const user = await User.create({
             name,
             email,
+            mobile,
             password: hashedPassword,
             career_goals
         });
@@ -55,6 +56,7 @@ exports.login = async (req, res) => {
             id: user.id,
             name: user.name,
             email: user.email,
+            mobile: user.mobile,
             career_goals: user.career_goals,
             accessToken: token
         });
@@ -67,7 +69,7 @@ exports.login = async (req, res) => {
 
 exports.updateProfile = async (req, res) => {
     const userId = req.userId;
-    const { name, career_goals } = req.body;
+    const { name, mobile, career_goals } = req.body;
 
     try {
         const user = await User.findByPk(userId);
@@ -80,6 +82,7 @@ exports.updateProfile = async (req, res) => {
 
         await user.update({
             name,
+            mobile,
             career_goals
         });
 
