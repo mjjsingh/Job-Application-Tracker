@@ -9,3 +9,4 @@ router.put('/profile', verifyToken, authController.updateProfile);
 
 module.exports = router;
 
+
