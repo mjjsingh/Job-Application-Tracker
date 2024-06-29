@@ -5,7 +5,7 @@ exports.createReminder = async (req, res) => {
   try {
     const { applicationId, reminderDate, message } = req.body;
     const reminder = await Reminder.create({ applicationId, reminderDate, message, userId: req.userId });
-    emailService.sendReminderEmail(req.user.email, reminder);
+    emailService.sendReminderEmail(req.user.email, reminder); // Ensure req.user.email is available
     res.status(201).send({ message: 'Reminder set successfully', reminder });
   } catch (error) {
     res.status(400).send({ error: error.message });
@@ -20,3 +20,4 @@ exports.getReminders = async (req, res) => {
     res.status(400).send({ error: error.message });
   }
 };
+
