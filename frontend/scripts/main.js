@@ -1,101 +1,96 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const signupForm = document.getElementById('signupForm');
-    if (signupForm) {
-        signupForm.addEventListener('submit', async (event) => {
-            event.preventDefault();
+document.addEventListener('DOMContentLoaded', async () => {
+    const jobsContainer = document.getElementById('job-applications');
+    const accessToken = JSON.parse(localStorage.getItem('user')).accessToken;
 
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const mobile = document.getElementById('mobile').value;
-            const password = document.getElementById('password').value;
-
-            try {
-                const response = await axios.post('http://localhost:3000/api/auth/signup', {
-                    name,
-                    email,
-                    mobile,
-                    password
-                });
-
-                if (response.status === 201) {
-                    alert('Signup successful!');
-                    window.location.href = 'login.html';
-                } else {
-                    alert(`Signup failed: ${response.data.message}`);
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                alert('An error occurred. Please try again.');
+    // Fetch job applications on page load
+    try {
+        const response = await axios.get('http://localhost:4000/api/applications', {
+            headers: {
+                'Authorization': `Bearer ${accessToken}`
             }
         });
-    }
 
-    const loginForm = document.getElementById('loginForm');
-    if (loginForm) {
-        loginForm.addEventListener('submit', async (event) => {
-            event.preventDefault();
+        const jobs = response.data;
 
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-
-            try {
-                const response = await axios.post('http://localhost:3000/api/auth/login', {
-                    email,
-                    password
-                });
-
-                if (response.status === 200) {
-                    const user = response.data;
-                    alert('Login successful!');
-                    localStorage.setItem('user', JSON.stringify(user));
-                    window.location.href = 'index.html';
-                } else {
-                    alert('Login failed! Invalid credentials.');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                alert('An error occurred. Please try again.');
-            }
+        jobs.forEach(job => {
+            const jobCard = document.createElement('div');
+            jobCard.classList.add('job-card');
+            jobCard.innerHTML = `
+                <h3>${job.company}</h3>
+                <p><strong>Job Title:</strong> ${job.jobTitle}</p>
+                <p><strong>Status:</strong> ${job.status}</p>
+                <p><strong>Application Date:</strong> ${new Date(job.applicationDate).toLocaleDateString()}</p>
+                <p><strong>Notes:</strong> ${job.notes || 'N/A'}</p>
+                <button class="edit-btn" data-id="${job.id}">Edit</button>
+                <button class="delete-btn" data-id="${job.id}">Delete</button>
+            `;
+            jobsContainer.appendChild(jobCard);
         });
+
+    } catch (error) {
+        console.error('Error fetching job applications:', error.message);
     }
 
-    const profileForm = document.getElementById('profileForm');
-    if (profileForm) {
-        profileForm.addEventListener('submit', async (event) => {
-            event.preventDefault();
+    // Handle form submission for creating job applications
+    const jobApplicationForm = document.getElementById('jobApplicationForm');
+    jobApplicationForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
 
-            const user = JSON.parse(localStorage.getItem('user'));
-            const token = user ? user.accessToken : null;
+        const company = document.getElementById('company').value;
+        const jobTitle = document.getElementById('jobTitle').value;
+        const applicationDate = document.getElementById('applicationDate').value;
+        const status = document.getElementById('status').value;
+        const notes = document.getElementById('notes').value;
 
-            const name = document.getElementById('profileName').value;
-            const mobile = document.getElementById('profileMobile').value;
-            const careerGoals = document.getElementById('profileCareerGoals').value;
+        try {
+            const response = await axios.post('http://localhost:4000/api/applications', {
+                company,
+                jobTitle,
+                applicationDate,
+                status,
+                notes
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`
+                }
+            });
+
+            console.log('Job application created successfully:', response.data);
+            // Optionally, update UI or redirect after successful creation
+            jobApplicationForm.reset(); // Clear form fields
+        } catch (error) {
+            console.error('Error creating job application:', error.message);
+        }
+    });
+
+    // Example: Edit job application
+    jobsContainer.addEventListener('click', async (event) => {
+        if (event.target.classList.contains('edit-btn')) {
+            const jobId = event.target.getAttribute('data-id');
+            // Implement edit functionality as needed
+            console.log(`Edit job application with id ${jobId}`);
+        }
+    });
+
+    // Example: Delete job application
+    jobsContainer.addEventListener('click', async (event) => {
+        if (event.target.classList.contains('delete-btn')) {
+            const jobId = event.target.getAttribute('data-id');
 
             try {
-                const response = await axios.put('http://localhost:3000/api/auth/profile', {
-                    name,
-                    mobile,
-                    career_goals: careerGoals
-                }, {
+                const response = await axios.delete(`http://localhost:4000/api/applications/${jobId}`, {
                     headers: {
-                        'Content-Type': 'application/json',
-                        'x-access-token': token
+                        'Authorization': `Bearer ${accessToken}`
                     }
                 });
 
-                if (response.status === 200) {
-                    const updatedUser = response.data;
-                    alert('Profile updated successfully!');
-                    localStorage.setItem('user', JSON.stringify(updatedUser));
-                } else {
-                    alert(`Profile update failed: ${response.data.message}`);
-                }
+                console.log('Job application deleted successfully:', response.data);
+                // Optionally, update UI after successful deletion
             } catch (error) {
-                console.error('Error:', error);
-                alert('An error occurred. Please try again.');
+                console.error('Error deleting job application:', error.message);
             }
-        });
-    }
+        }
+    });
 });
 
 

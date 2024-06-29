@@ -1,20 +1,36 @@
-const app = require('./app'); 
-const db = require('./backend/models'); 
-const PORT = process.env.PORT || 4000; 
+const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const dotenv = require('dotenv');
+const sequelize = require('./backend/config/db.config');
+const authRoutes = require('./backend/routes/auth.routes');
+const jobRoutes = require('./backend/routes/job.routes');
 
-db.sequelize.authenticate()
-    .then(() => {
-        console.log('Database connection has been established successfully.');
-        return db.sequelize.sync({ force: false }); // Set force: true if you want to drop tables and recreate them on every server start
-    })
-    .then(() => {
-        console.log('Database synchronized.');
+dotenv.config();
 
-        app.listen(PORT, () => {
-            console.log(`Server is running on http://localhost:${PORT}`);
-        });
-    })
-    .catch(err => {
-        console.error('Database connection error:', err);
+const app = express();
+const PORT = process.env.PORT || 4000;
+
+// Middleware
+app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Routes
+app.use('/api/auth', authRoutes);
+app.use('/api/jobs', jobRoutes);
+
+// Database connection and synchronization
+sequelize.sync()
+  .then(() => {
+    console.log('Database connection has been established successfully.');
+
+    // Start server after successful database connection
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`);
     });
+  })
+  .catch(err => {
+    console.error('Unable to connect to the database:', err);
+  });
 
