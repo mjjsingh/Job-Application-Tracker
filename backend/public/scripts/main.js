@@ -5,6 +5,8 @@ document.addEventListener('DOMContentLoaded', function() {
     links.forEach(link => {
       if (link.getAttribute('href') === currentPath) {
         link.classList.add('active');
+      } else {
+        link.classList.remove('active');
       }
     });
   });

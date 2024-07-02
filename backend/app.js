@@ -3,17 +3,21 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const sequelize = require('./backend/config/db.config');
-const authRoutes = require('./backend/routes/auth.routes');
-const profileRoutes = require('./backend/routes/profile.routes');
-const applicationRoutes = require('./backend/routes/application.routes');
-const reminderRoutes = require('./backend/routes/reminder.routes');
-const companyRoutes = require('./backend/routes/company.routes');
+const sequelize = require('./config/db.config');
+const authRoutes = require('./routes/auth.routes');
+const profileRoutes = require('./routes/profile.routes');
+const applicationRoutes = require('./routes/application.routes');
+const reminderRoutes = require('./routes/reminder.routes');
+const companyRoutes = require('./routes/company.routes');
 
 const app = express();
 
-app.use(bodyParser.json());
 app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Static files
+app.use(express.static('public'));
 
 app.use('/api/auth', authRoutes);
 app.use('/api/profile', profileRoutes);
