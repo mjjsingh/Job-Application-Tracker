@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../../../practice_bkd/backend/config/db.config');
+const sequelize = require('../config/db.config');
 
 const Company = sequelize.define('Company', {
   name: { type: DataTypes.STRING, allowNull: false },
