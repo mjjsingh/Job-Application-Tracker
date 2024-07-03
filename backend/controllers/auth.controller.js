@@ -71,8 +71,8 @@ exports.login = async (req, res) => {
     // Generate JWT token
     const token = generateToken(user);
 
-    // Respond with token
-    res.status(200).json({ token });
+    // Respond with token and success message
+    res.status(200).json({ token, message: 'Login successful' });
   } catch (error) {
     console.error(error.message);
     res.status(500).send('Server Error');
