@@ -25,7 +25,7 @@ app.use('/api/applications', applicationRoutes);
 app.use('/api/reminders', reminderRoutes);
 app.use('/api/companies', companyRoutes);
 
-sequelize.sync().then(() => {
+sequelize.sync({ force: true }).then(() => {  // Force sync
   console.log('Database synchronized');
 }).catch(err => {
   console.error('Database sync error:', err);
