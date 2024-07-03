@@ -1,12 +1,20 @@
 const Application = require('../models/application.model');
-
 exports.createApplication = async (req, res) => {
   try {
-    const { companyName, jobTitle, applicationDate, status, notes } = req.body;
-    const application = await Application.create({ companyName, jobTitle, applicationDate, status, notes, userId: req.userId });
-    res.status(201).send({ message: 'Application logged successfully', application });
+      const { companyName, jobTitle, applicationDate, status, notes } = req.body;
+
+      const newApplication = await Application.create({
+          companyName,
+          jobTitle,
+          applicationDate,
+          status,
+          notes
+      });
+
+      res.status(201).json({ message: 'Application created successfully', application: newApplication });
   } catch (error) {
-    res.status(400).send({ error: error.message });
+      console.error('Error creating application:', error);
+      res.status(500).json({ message: 'Failed to create application', error: error.message });
   }
 };
 
