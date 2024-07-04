@@ -3,33 +3,40 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Company Information - Job Application Tracker</title>
-  <link rel="stylesheet" href="./styles/styles.css">
+  <title>Company Information</title>
+  <link rel="stylesheet" href="styles/styles.css">
+    <script src="scripts/auth.js" defer></script>
+    <script src="scripts/main.js" defer></script>
 </head>
 <body>
   <header>
-    <h1>Company Information</h1>
     <nav>
       <ul>
+        <li><a href="index.html">Home</a></li>
         <li><a href="dashboard.html">Dashboard</a></li>
         <li><a href="job_application.html">Job Applications</a></li>
       </ul>
     </nav>
   </header>
   <main>
-    <section id="company-form">
-      <form id="company-form" action="/api/companies" method="POST">
-        <label for="companyName">Company Name:</label>
-        <input type="text" id="companyName" name="companyName" required>
-        <label for="industry">Industry:</label>
-        <input type="text" id="industry" name="industry" required>
-        <label for="website">Website:</label>
-        <input type="url" id="website" name="website">
-        <label for="location">Location:</label>
-        <input type="text" id="location" name="location">
-        <button type="submit">Save Company</button>
-      </form>
-    </section>
-  </main>
+    <h1>Store Company Information</h1>
+    <form id="companyInformationForm">
+      <label for="companyName">Company Name:</label>
+      <input type="text" id="companyName" name="companyName" required>
+
+      <label for="contactDetails">Contact Details:</label>
+      <input type="text" id="contactDetails" name="contactDetails" required>
+
+      <label for="companySize">Company Size:</label>
+      <input type="text" id="companySize" name="companySize">
+
+      <label for="industry">Industry:</label>
+      <input type="text" id="industry" name="industry">
+
+      <label for="notes">Notes:</label>
+      <textarea id="notes" name="notes"></textarea>
+
+      <button type="submit">Save Company Info</button>
+  </form>
 </body>
 </html>

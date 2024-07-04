@@ -1,10 +1,20 @@
+
+
 const Company = require('../models/company.model');
 
 exports.createCompany = async (req, res) => {
   try {
-    const { name, contactDetails, size, industry, notes } = req.body;
-    const company = await Company.create({ name, contactDetails, size, industry, notes, userId: req.userId });
-    res.status(201).send({ message: 'Company info saved successfully', company });
+    const { companyName, contactName, email, phone, industry, notes } = req.body;
+    const company = await Company.create({
+      companyName,
+      contactName,
+      email,
+      phone,
+      industry,
+      notes,
+      userId: req.userId
+    });
+    res.status(201).send({ message: 'Company information saved successfully', company });
   } catch (error) {
     res.status(400).send({ error: error.message });
   }

@@ -3,8 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Job Application Form</title>
-  <link rel="stylesheet" href="./styles/styles.css">
+  <title>Job Application</title>
+  <link rel="stylesheet" href="styles/styles.css">
+    <script src="scripts/auth.js" defer></script>
+    <script src="scripts/main.js" defer></script>
 </head>
 <body>
   <header>
@@ -18,33 +20,31 @@
 </header>
 <main>
   <h1>Job Application Form</h1>
-  <form id="jobApplicationForm">
-      <label for="companyName">Company Name:</label>
-      <input type="text" id="companyName" name="companyName" required><br><br>
-      
-      <label for="jobTitle">Job Title:</label>
-      <input type="text" id="jobTitle" name="jobTitle" required><br><br>
-      
-      <label for="applicationDate">Application Date:</label>
-      <input type="date" id="applicationDate" name="applicationDate" required><br><br>
-      
-      <label for="status">Status:</label>
-      <select id="status" name="status" required>
-          <option value="applied">Applied</option>
-          <option value="interviewed">Interviewed</option>
-          <option value="offered">Offered</option>
-          <option value="rejected">Rejected</option>
-      </select><br><br>
-      
-      <label for="notes">Notes:</label><br>
-      <textarea id="notes" name="notes" rows="4" cols="50"></textarea><br><br>
-      
-      <button type="submit">Submit</button>
-  </form>
-</main>
+  <form id="jobApplicationForm" enctype="multipart/form-data">
+    <label for="companyName">Company Name:</label>
+    <input type="text" id="companyName" name="companyName" required>
 
-<script src="./scripts/main.js"></script> 
-<script src="./scripts/auth.js"></script> 
+    <label for="jobTitle">Job Title:</label>
+    <input type="text" id="jobTitle" name="jobTitle" required>
 
+    <label for="applicationDate">Application Date:</label>
+    <input type="date" id="applicationDate" name="applicationDate" required>
+
+    <label for="status">Status:</label>
+    <select id="status" name="status" required>
+        <option value="applied">Applied</option>
+        <option value="interviewed">Interviewed</option>
+        <option value="offered">Offered</option>
+        <option value="rejected">Rejected</option>
+    </select>
+
+    <label for="notes">Notes:</label>
+    <textarea id="notes" name="notes"></textarea>
+
+    <label for="attachment">Attach Resume/Cover Letter:</label>
+    <input type="file" id="attachment" name="attachment">
+
+    <button type="submit">Log Application</button>
+</form>
 </body>
 </html>
