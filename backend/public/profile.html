@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Profile</title>
+  <link rel="stylesheet" href="styles/styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>User Profile</h1>
+    <form id="profileForm">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" ><br><br>
+      <label for="careerGoals">Career Goals:</label>
+      <textarea id="careerGoals" name="careerGoals"></textarea><br><br>
+      <button type="button" id="updateProfileBtn">Update Profile</button>
+      <button type="button" id="deleteProfileBtn">Delete Profile</button>
+    </form>
+    <div id="profileInfo">
+      <h2>Profile Information</h2>
+      <p>Username: <span id="profileUsername"></span></p>
+      <p>Career Goals: <span id="profileCareerGoals"></span></p>
+    </div>
+  </div>
+
+  <script src="scripts/main.js"></script>
+</body>
+</html>
+
+
+
