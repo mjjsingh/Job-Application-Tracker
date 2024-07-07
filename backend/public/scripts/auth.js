@@ -1,65 +1,59 @@
-document.addEventListener('DOMContentLoaded', function() {
-  // Signup Form Submission
-  const signupForm = document.getElementById('signup-form');
-  if (signupForm) {
-      signupForm.addEventListener('submit', async (event) => {
-          event.preventDefault();
-          const username = document.getElementById('username').value;
-          const email = document.getElementById('email').value;
-          const password = document.getElementById('password').value;
+const signupForm = document.getElementById('signupForm');
 
-          try {
-              const response = await fetch('/api/auth/register', {
-                  method: 'POST',
-                  headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify({ username, email, password }),
-              });
+if (signupForm) {
+    signupForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
 
-              const data = await response.json();
-              if (response.ok) {
-                  window.location.href = 'login.html'; 
-              } else {
-                  console.error('Signup Error:', data.errors || data.message);
-              }
-          } catch (error) {
-              console.error('Signup Error:', error);
-          }
-      });
-  } 
+        const formData = new FormData(signupForm);
+        const userData = {
+            username: formData.get('username'),
+            email: formData.get('email'),
+            password: formData.get('password')
+        };
 
-  // Login Form Submission
-  const loginForm = document.getElementById('loginForm');
-  if (loginForm) {
-      loginForm.addEventListener('submit', async (event) => {
-          event.preventDefault();
+        try {
+            const response = await axios.post('http://localhost:3000/api/auth/register', userData);
 
-          const email = document.getElementById('email').value;
-          const password = document.getElementById('password').value;
+            
+            if (response.data.token) {
+               
+                window.location.href = 'login.html';
+            } else {
+                console.error('Token not found in response'); // Handle this case if needed
+            }
+        } catch (error) {
+            console.error('Signup Error:', error.message);
+        }
+    });
+}
 
-          try {
-              const response = await fetch('/api/auth/login', {
-                  method: 'POST',
-                  headers: {
-                      'Content-Type': 'application/json'
-                  },
-                  body: JSON.stringify({ email, password })
-              });
+// Login Form Handling
+const loginForm = document.getElementById('loginForm');
 
-              const data = await response.json();
+if (loginForm) {
+    loginForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
 
-              if (response.ok) {
-                  alert('Login successful');
-                  localStorage.setItem('token', data.token);
-                  window.location.href = 'dashboard.html';
-              } else {
-                  alert(data.message || 'Login failed');
-              }
-          } catch (error) {
-              console.error('Error:', error);
-              alert('An error occurred. Please try again.');
-          }
-      });
-  } else {
-      console.error('Login form not found');
-  }
-});
+        const formData = new FormData(loginForm);
+        const userData = {
+            email: formData.get('email'),
+            password: formData.get('password')
+        };
+
+        try {
+            const response = await axios.post('http://localhost:3000/api/auth/login', userData);
+
+            
+            if (response.data.token) {
+                console.log('Login Successful');
+                
+                window.location.href = '/dashboard.html';  // Adjust path as per your frontend setup
+            } else {
+                console.error('Token not found in response'); // Handle this case if needed
+            }
+        } catch (error) {
+            console.error('Login Error:', error.message);
+        }
+    });
+}
+  

@@ -37,13 +37,14 @@ exports.register = async (req, res) => {
     // Generate JWT token
     const token = generateToken(user);
 
-    // Respond with token
-    res.status(201).json({ token });
+    // Redirect to login page
+    res.redirect('/login.html'); 
   } catch (error) {
     console.error(error.message);
     res.status(500).send('Server Error');
   }
 };
+
 
 // Login user
 exports.login = async (req, res) => {
@@ -78,4 +79,3 @@ exports.login = async (req, res) => {
     res.status(500).send('Server Error');
   }
 };
-
