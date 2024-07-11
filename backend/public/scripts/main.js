@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
       try {
         const response = await axios.post('/api/applications', formData, {
           headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
+            'Authorization': `${localStorage.getItem('token')}`
           }
         });
 
@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
       try {
         const response = await axios.post('/api/companies', formData, {
           headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
+            'Authorization': ` ${localStorage.getItem('token')}`
           }
         });
 
@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function() {
     try {
       const response = await axios.put('/api/profile', formData, {
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+          'Authorization': ` ${localStorage.getItem('token')}`
         }
       });
 

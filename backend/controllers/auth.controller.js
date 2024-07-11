@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const User = require('../models/user.model');
 const { validationResult } = require('express-validator');
+const { response } = require('express');
 
 // Function to generate JWT token
 function generateToken(user) {
@@ -15,30 +16,30 @@ function generateToken(user) {
 exports.register = async (req, res) => {
   try {
     const { username, email, password } = req.body;
+    console.log(req.body)
 
-    // Validate request body
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+    if(!username || !password || !email){
+      return res.status(400).json({message: 'All field are required'})
     }
+   
+  
 
-    // Check if user already exists
+  
     let user = await User.findOne({ where: { email } });
     if (user) {
       return res.status(400).json({ message: 'User already exists' });
     }
 
-    // Encrypt password
+  
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create new user
-    user = await User.create({ username, email, password: hashedPassword });
+    
+    const user_data = await User.create({ username, email, password: hashedPassword });
 
-    // Generate JWT token
-    const token = generateToken(user);
-
-    // Redirect to login page
-    res.redirect('/login.html'); 
+    const token = generateToken(user_data);
+    return res.status(201).json({ message: 'User successfully signup',token });
+    
+    //res.redirect('/login.html'); 
   } catch (error) {
     console.error(error.message);
     res.status(500).send('Server Error');
@@ -46,16 +47,17 @@ exports.register = async (req, res) => {
 };
 
 
+
 // Login user
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
-
-    // Validate request body
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+    console.log(req.body)
+    
+    if(!password || !email){
+      return res.status(400).json({message: 'All field are required'})
     }
+   
 
     // Check if user exists
     const user = await User.findOne({ where: { email } });

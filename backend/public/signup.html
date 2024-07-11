@@ -5,31 +5,48 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sign Up - Job Application Tracker</title>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <link rel="stylesheet" href="./styles/styles.css">
+  <link rel="stylesheet" href="styles/styles.css">
 </head>
 <body>
   <header>
     <h1>Sign Up</h1>
     <nav>
       <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="login.html">Login</a></li>
+        <li id="home"><a href="#">Home</a></li>
+        <li id="login"><a href="#">Login</a></li>
       </ul>
     </nav>
   </header>
   <main>
-    <section id="signup-form">
-      <form id="signup-form" action="/api/auth/register" method="POST">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
-        <button type="submit">Sign Up</button>
-      </form>
-    </section>
+    <form id="signup-form">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required>
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+      <button type="submit">Sign Up</button>
+    </form>
   </main>
-  <script src="scripts/auth.js"></script>
+  <script src="./scripts/auth.js"></script>
+  <script>
+    const apiUrl = "http://localhost:3000";
+
+    document.addEventListener("DOMContentLoaded", function() {
+      const loginBtn = document.getElementById('login');
+      const signupBtn = document.getElementById('home');
+
+      loginBtn.addEventListener("click", function(event) {
+        event.preventDefault();
+        window.location.href = `${apiUrl}/public/login.html`;
+      });
+
+      signupBtn.addEventListener("click", function(event) {
+        event.preventDefault();
+        window.location.href = `${apiUrl}/public/index.html`;
+      });
+    });
+  </script>
 </body>
 </html>
+

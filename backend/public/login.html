@@ -10,9 +10,9 @@
 <body>
   <nav>
     <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="login.html">Login</a></li>
-      <li><a href="signup.html">Signup</a></li>
+      <li id="home"><a href="#">Home</a></li>
+      
+      <li id="signup"><a href="#">Signup</a></li>
     </ul>
   </nav>
 
@@ -26,8 +26,27 @@
     <br>
     <button type="submit">Login</button>
   </form>
+  <script>
+    const apiUrl = "http://localhost:3000";
 
+    document.addEventListener("DOMContentLoaded", function() {
+     
+      const signupBtn = document.getElementById('signup');
+      const homeBtn = document.getElementById('home');
+
+
+      signupBtn.addEventListener("click", function(event) {
+        event.preventDefault();
+        window.location.href = `${apiUrl}/api/redirecting/signupPage`;
+      });
+      homeBtn.addEventListener("click", function(event) {
+        event.preventDefault();
+        window.location.href = `${apiUrl}/api/redirecting/welcome`;
+      });
+    });
+  </script>
   <script src="scripts/auth.js"></script>
+ 
 </body>
 </html>
 
