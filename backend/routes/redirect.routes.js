@@ -7,6 +7,12 @@ router.get('/welcome', (req, res) => {
   const filePath = path.join(__dirname,  '..', 'public', 'index.html');
   res.sendFile(filePath);
 });
+
+router.get('/profilePage', (req, res) => {
+  const filePath = path.join(__dirname,  '..', 'public', 'profile.html');
+  res.sendFile(filePath);
+});
+
 router.get('/loginPage', (req, res) => {
   const filePath = path.join(__dirname,  '..', 'public', 'login.html');
   res.sendFile(filePath);

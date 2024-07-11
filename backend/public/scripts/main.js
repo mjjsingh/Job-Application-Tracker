@@ -1,4 +1,30 @@
-document.addEventListener('DOMContentLoaded', function() {
+console.log('in dom of main');
+const apiUrl = 'http://localhost:3000';
+
+// Element selectors
+const profileBtn = document.getElementById('profile');
+const jobApplicationBtn = document.getElementById('job_application');
+const companyInformationBtn = document.getElementById('company_information');
+
+document.addEventListener("DOMContentLoaded", function () {
+
+  // Event listeners for navigation buttons
+  profileBtn.addEventListener("click", function (event) {
+    event.preventDefault();
+    window.location.href = `${apiUrl}/api/redirecting/profilePage`;
+  });
+
+  jobApplicationBtn.addEventListener("click", function (event) {
+    event.preventDefault();
+    window.location.href = `${apiUrl}/api/redirecting/jobApplicationPage`;
+  });
+
+  companyInformationBtn.addEventListener("click", function (event) {
+    event.preventDefault();
+    window.location.href = `${apiUrl}/api/redirecting/companyInformationPage`;
+  });
+
+  // Highlight the current active link in the navigation
   const currentPath = window.location.pathname;
   const links = document.querySelectorAll('nav ul li a');
 
@@ -10,9 +36,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
+  // Job Application Form Submission
   const jobApplicationForm = document.getElementById('jobApplicationForm');
   if (jobApplicationForm) {
-    jobApplicationForm.addEventListener('submit', async function(event) {
+    jobApplicationForm.addEventListener('submit', async function (event) {
       event.preventDefault();
 
       const formData = {
@@ -26,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function() {
       try {
         const response = await axios.post('/api/applications', formData, {
           headers: {
-            'Authorization': `${localStorage.getItem('token')}`
+            'Authorization': `Bearer ${localStorage.getItem('token')}` // Use Bearer token for authorization
           }
         });
 
@@ -40,9 +67,10 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
+  // Company Information Form Submission
   const companyInfoForm = document.getElementById('companyInfoForm');
   if (companyInfoForm) {
-    companyInfoForm.addEventListener('submit', async function(event) {
+    companyInfoForm.addEventListener('submit', async function (event) {
       event.preventDefault();
 
       const formData = {
@@ -57,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function() {
       try {
         const response = await axios.post('/api/companies', formData, {
           headers: {
-            'Authorization': ` ${localStorage.getItem('token')}`
+            'Authorization': `Bearer ${localStorage.getItem('token')}` // Use Bearer token for authorization
           }
         });
 
@@ -76,15 +104,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const username = document.getElementById('username').value;
     const careerGoals = document.getElementById('careerGoals').value;
 
-    const formData = {
-      username,
-      careerGoals
-    };
+    const formData = { username, careerGoals };
 
     try {
       const response = await axios.put('/api/profile', formData, {
         headers: {
-          'Authorization': ` ${localStorage.getItem('token')}`
+          'Authorization': `Bearer ${localStorage.getItem('token')}` // Use Bearer token for authorization
         }
       });
 
@@ -105,7 +130,7 @@ document.addEventListener('DOMContentLoaded', function() {
       try {
         const response = await axios.delete('/api/profile', {
           headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
+            'Authorization': `Bearer ${localStorage.getItem('token')}` // Use Bearer token for authorization
           }
         });
 
@@ -131,11 +156,12 @@ document.addEventListener('DOMContentLoaded', function() {
     deleteProfileButton.addEventListener('click', deleteProfile);
   }
 
+  // Fetch profile information and populate the form
   const getProfile = async () => {
     try {
       const response = await axios.get('/api/profile', {
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+          'Authorization': `Bearer ${localStorage.getItem('token')}` // Use Bearer token for authorization
         }
       });
 
@@ -150,5 +176,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   };
 
+  // Call getProfile to load the profile data when the page loads
   getProfile();
 });
