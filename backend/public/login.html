@@ -26,26 +26,8 @@
     <br>
     <button type="submit">Login</button>
   </form>
-  <script>
-    const apiUrl = "http://localhost:3000";
 
-    document.addEventListener("DOMContentLoaded", function() {
-     
-      const signupBtn = document.getElementById('signup');
-      const homeBtn = document.getElementById('home');
-
-
-      signupBtn.addEventListener("click", function(event) {
-        event.preventDefault();
-        window.location.href = `${apiUrl}/api/redirecting/signupPage`;
-      });
-      homeBtn.addEventListener("click", function(event) {
-        event.preventDefault();
-        window.location.href = `${apiUrl}/api/redirecting/welcome`;
-      });
-    });
-  </script>
-  <script src="scripts/auth.js"></script>
+  <script src="/scripts/login.js"></script>
  
 </body>
 </html>

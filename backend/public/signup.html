@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sign Up - Job Application Tracker</title>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <link rel="stylesheet" href="styles/styles.css">
+  <!-- <link rel="stylesheet" href="styles/styles.css"> -->
 </head>
 <body>
   <header>
@@ -28,25 +28,7 @@
       <button type="submit">Sign Up</button>
     </form>
   </main>
-  <script src="./scripts/auth.js"></script>
-  <script>
-    const apiUrl = "http://localhost:3000";
-
-    document.addEventListener("DOMContentLoaded", function() {
-      const loginBtn = document.getElementById('login');
-      const signupBtn = document.getElementById('home');
-
-      loginBtn.addEventListener("click", function(event) {
-        event.preventDefault();
-        window.location.href = `${apiUrl}/public/login.html`;
-      });
-
-      signupBtn.addEventListener("click", function(event) {
-        event.preventDefault();
-        window.location.href = `${apiUrl}/public/index.html`;
-      });
-    });
-  </script>
+  <script src="/scripts/Signup.js"></script>
 </body>
 </html>
 

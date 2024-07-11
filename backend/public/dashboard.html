@@ -6,16 +6,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard - Job Application Tracker</title>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <link rel="stylesheet" href="./styles/styles.css">
+  <link rel="stylesheet" href="/styles/styles.css">
 </head>
 <body>
   <header>
     <h1>Dashboard</h1>
     <nav>
       <ul>
-        <li><a href="profile.html">Profile</a></li>
-        <li><a href="job_application.html">Job Applications</a></li>
-        <li><a href="company_information.html">Company Information</a></li>
+        <li id="profile"><a href="profile.html">Profile</a></li>
+        <li id="job_application"><a href="job_application.html">Job Applications</a></li>
+        <li id="company_information"><a href="company_information.html">Company Information</a></li>
       </ul>
     </nav>
   </header>
@@ -25,5 +25,6 @@
       <p>View and manage your job applications and company information.</p>
     </section>
   </main>
+  <script src="/scripts/main.js"></script>
 </body>
 </html>
