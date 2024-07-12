@@ -22,11 +22,11 @@ app.use(express.json())
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api/auth', authRoutes);
-app.use('/api/profile', profileRoutes);
-app.use('/api/applications', applicationRoutes);
-app.use('/api/reminders', reminderRoutes);
-app.use('/api/companies', companyRoutes);
-app.use('/api/redirecting',redirectRoutes);
+// app.use('/api/profile', profileRoutes);
+// app.use('/api/applications', applicationRoutes);
+// app.use('/api/reminders', reminderRoutes);
+// app.use('/api/companies', companyRoutes);
+// app.use('/api/redirecting',redirectRoutes);
 const PORT = process.env.PORT || 3000; 
 
 
