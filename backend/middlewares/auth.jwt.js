@@ -1,11 +1,9 @@
-
 const User = require('../models/user.model');
-
 const jwt = require('jsonwebtoken');
 
-exports.verify = (req, res, next) => {
-  const token = req.headers['Authorization'];
-console.log(token)
+const verify = async (req, res, next) => {
+try{
+  const token = req.headers['authorization'];
   if (!token) {
     return res.status(403).send({ error: 'No token provided' });
   }
@@ -17,7 +15,11 @@ console.log(token)
 
     req.userId = decoded.id;
     next();
-  });
+  })
+}catch(err){
+  console.log(err)
+  return res.status(401).json({success: false, message: "Token verification failed" })
+}
 };
 
-
+module.exports = verify;
