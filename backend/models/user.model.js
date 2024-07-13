@@ -23,6 +23,7 @@ const User = sequelize.define('User', {
   careerGoals: {
     type: DataTypes.TEXT,
     allowNull: true,
+    defaultValue: 'Freshers',
   },
 }, {
   timestamps: true,

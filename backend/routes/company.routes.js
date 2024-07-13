@@ -1,9 +1,8 @@
 const express = require('express');
 const { createCompany, getCompanies } = require('../controllers/company.controller');
 const router = express.Router();
-const authJwt = require('../middlewares/auth.jwt');
 
-router.post('/', authJwt, createCompany);
-router.get('/', authJwt, getCompanies);
+router.post('/', createCompany);
+router.get('/', getCompanies);
 
 module.exports = router;

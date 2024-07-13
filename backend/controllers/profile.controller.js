@@ -17,9 +17,11 @@ exports.getProfile = async (req, res) => {
 // Update user profile
 exports.updateProfile = async (req, res) => {
   try {
-    const { careerGoals } = req.body;
-    await User.update({ careerGoals }, { where: { id: req.userId } });
+    const { careerGoals, username } = req.body;
+    console.log(req.userId, careerGoals)
+    await User.update({ careerGoals,username }, { where: { id: req.userId } });
     const updatedUser = await User.findByPk(req.userId);
+    console.log(updatedUser)
     res.status(200).send({ username: updatedUser.username, careerGoals: updatedUser.careerGoals });
   } catch (error) {
     console.error(error);
