@@ -1,7 +1,7 @@
 
-
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db.config');
+const JobListing = require('./jobListing.model'); 
 
 const Company = sequelize.define('Company', {
   companyName: {
@@ -30,5 +30,10 @@ const Company = sequelize.define('Company', {
     allowNull: false
   }
 });
+
+module.exports = Company;
+
+Company.hasMany(JobListing, { foreignKey: 'companyId', onDelete: 'CASCADE' });
+JobListing.belongsTo(Company, { foreignKey: 'companyId' });
 
 module.exports = Company;

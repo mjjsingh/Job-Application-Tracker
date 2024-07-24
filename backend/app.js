@@ -19,6 +19,8 @@ app.use(express.json());
 
 // Static files
 app.use(express.static(path.join(__dirname, "public")));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 
 app.use("/api/auth", authRoutes);
 app.use("/api/profile", verify, profileRoutes);

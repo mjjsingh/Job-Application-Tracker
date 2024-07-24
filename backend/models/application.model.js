@@ -1,6 +1,6 @@
 // application.model.js
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/db.config'); 
+const sequelize = require('../config/db.config');
 
 const Application = sequelize.define('Application', {
   companyName: {
@@ -21,6 +21,10 @@ const Application = sequelize.define('Application', {
   },
   notes: {
     type: DataTypes.TEXT,
+    allowNull: true
+  },
+  attachment: {
+    type: DataTypes.STRING,
     allowNull: true
   }
 });
